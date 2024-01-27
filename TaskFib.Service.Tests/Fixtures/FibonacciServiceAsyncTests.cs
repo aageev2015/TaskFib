@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using NSubstitute;
+using System.Numerics;
+using TaskFib.Service.Contract;
 
 namespace TaskFib.Service.Tests.Fixtures
 {
@@ -16,45 +18,46 @@ namespace TaskFib.Service.Tests.Fixtures
         [SetUp]
         public void SetUp()
         {
-            _service = new FibonacciServiceAsync();
+            var iterationsWorkload = Substitute.For<IIterationsWorkloadAsync>();
+            _service = new FibonacciServiceAsync(iterationsWorkload);
         }
 
         [Test]
-        public async void When_RangeSingleStartingIndex_Then_ReturnCorrectSingleFibonacciValue()
+        public async Task When_RangeSingleStartingIndex_Then_ReturnCorrectSingleFibonacciValue()
         {
             Assert.That(
                 await _service.GetSequence(1, 1, 2000, int.MaxValue),
-                Is.EquivalentTo((int[])[1]));
+                Is.EquivalentTo((List<BigInteger>)[1]));
 
             Assert.That(
                 await _service.GetSequence(2, 2, 2000, int.MaxValue),
-                Is.EquivalentTo((int[])[1]));
+                Is.EquivalentTo((List<BigInteger>)[1]));
 
             Assert.That(
                 await _service.GetSequence(3, 3, 2000, int.MaxValue),
-                Is.EquivalentTo((int[])[2]));
+                Is.EquivalentTo((List<BigInteger>)[2]));
 
             Assert.That(
                 await _service.GetSequence(6, 6, 2000, int.MaxValue),
-                Is.EquivalentTo((int[])[8]));
+                Is.EquivalentTo((List<BigInteger>)[8]));
         }
 
         [Test]
-        public async void When_RangeSingleMidIndex_Then_ReturnCorrectSingleFibonacciValue()
+        public async Task When_RangeSingleMidIndex_Then_ReturnCorrectSingleFibonacciValue()
         {
             Assert.That(
                 await _service.GetSequence(17, 17, 2000, int.MaxValue),
-                Is.EquivalentTo((int[])[1597]));
+                Is.EquivalentTo((List<BigInteger>)[1597]));
 
             Assert.That(
                 await _service.GetSequence(46, 46, 2000, int.MaxValue),
-                Is.EquivalentTo((int[])[1836311903]));
+                Is.EquivalentTo((List<BigInteger>)[1836311903]));
         }
 
         [Test]
-        public async void When_RangeSingleLargeIndex_Then_ReturnCorrectSingleFibonacciValue()
+        public async Task When_RangeSingleLargeIndex_Then_ReturnCorrectSingleFibonacciValue()
         {
-            int[] a = [1, 2, 3];
+            List<BigInteger> a = [1, 2, 3];
             Assert.That(
                 await _service.GetSequence(49, 49, 2000, int.MaxValue),
                 Is.EquivalentTo((BigInteger[])[(BigInteger)13 * 97 * 6168709]));
@@ -65,28 +68,28 @@ namespace TaskFib.Service.Tests.Fixtures
         }
 
         [Test]
-        public async void When_LowRangeProvided_Then_ReturnCorrectFibonacciValues()
+        public async Task When_LowRangeProvided_Then_ReturnCorrectFibonacciValues()
         {
             Assert.That(
                await _service.GetSequence(1, 2, 2000, int.MaxValue),
-               Is.EquivalentTo((int[])[1, 1]));
+               Is.EquivalentTo((List<BigInteger>)[1, 1]));
 
 
             Assert.That(
                await _service.GetSequence(2, 6, 2000, int.MaxValue),
-               Is.EquivalentTo((int[])[1, 2, 3, 5, 8]));
+               Is.EquivalentTo((List<BigInteger>)[1, 2, 3, 5, 8]));
         }
 
         [Test]
-        public async void When_MidRangeProvided_Then_ReturnCorrectFibonacciValues()
+        public async Task When_MidRangeProvided_Then_ReturnCorrectFibonacciValues()
         {
             Assert.That(
                await _service.GetSequence(40, 46, 2000, int.MaxValue),
-               Is.EquivalentTo((int[])[102334155, 165580141, 267914296, 433494437, 701408733, 1134903170, 1836311903]));
+               Is.EquivalentTo((List<BigInteger>)[102334155, 165580141, 267914296, 433494437, 701408733, 1134903170, 1836311903]));
         }
 
         [Test]
-        public async void When_LargeRangeProvided_Then_ReturnCorrectFibonacciValues()
+        public async Task When_LargeRangeProvided_Then_ReturnCorrectFibonacciValues()
         {
             Assert.That(
                await _service.GetSequence(96, 99, 2000, int.MaxValue),
