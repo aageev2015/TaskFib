@@ -12,7 +12,7 @@ namespace TaskFib.Service.Tests.Fixtures
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private FibonacciServiceAsync _service;
-        private SubsequenceServiceAsync _rangeService;
+        private SubsequenceServiceAsync<BigInteger> _rangeService;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
@@ -21,7 +21,7 @@ namespace TaskFib.Service.Tests.Fixtures
         {
             var iterationsWorkload = Substitute.For<IIterationsWorkloadAsync>();
             _service = new FibonacciServiceAsync(iterationsWorkload);
-            _rangeService = new SubsequenceServiceAsync(_service);
+            _rangeService = new SubsequenceServiceAsync<BigInteger>(_service);
         }
 
         [Test]

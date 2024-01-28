@@ -1,4 +1,5 @@
-﻿using System.Runtime;
+﻿using System.Numerics;
+using System.Runtime;
 using System.Runtime.CompilerServices;
 using TaskFib.Service.Contract;
 
@@ -14,7 +15,7 @@ namespace TaskFib.Service.Tests.Fixtures
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private DelayWorkload _iterationsWorkload;
         private FibonacciServiceAsync _service;
-        private SubsequenceServiceAsync _rangeService;
+        private SubsequenceServiceAsync<BigInteger> _rangeService;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
@@ -39,7 +40,7 @@ namespace TaskFib.Service.Tests.Fixtures
         {
             _iterationsWorkload = new DelayWorkload();
             _service = new FibonacciServiceAsync(_iterationsWorkload);
-            _rangeService = new SubsequenceServiceAsync(_service);
+            _rangeService = new SubsequenceServiceAsync<BigInteger>(_service);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

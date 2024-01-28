@@ -1,14 +1,13 @@
-﻿using System.Numerics;
-using TaskFib.Service.Contract;
+﻿using TaskFib.Service.Contract;
 
 namespace TaskFib.Service
 {
-    public class SubsequenceServiceAsync(ISequenceValueServiceAsync<BigInteger> valueService) :
-        ISubsequenceServiceAsync<BigInteger>
+    public class SubsequenceServiceAsync<T>(ISequenceValueServiceAsync<T> valueService) :
+        ISubsequenceServiceAsync<T> where T : struct
     {
-        private readonly ISequenceValueServiceAsync<BigInteger> _valueService = valueService;
+        private readonly ISequenceValueServiceAsync<T> _valueService = valueService;
 
-        public async Task<List<BigInteger>> GetSubsequence(int fromIndex, int toIndex, int timeLimitMs, long memLimitBytes)
+        public async Task<List<T>> GetSubsequence(int fromIndex, int toIndex, int timeLimitMs, long memLimitBytes)
         {
             if (fromIndex > toIndex)
             {
@@ -23,7 +22,7 @@ namespace TaskFib.Service
             using var cancelSource = new CancellationTokenSource(timeLimitMs);
             var cancelToken = cancelSource.Token;
 
-            var result = new List<BigInteger>(toIndex - fromIndex + 1);
+            var result = new List<T>(toIndex - fromIndex + 1);
             for (var index = fromIndex; index <= toIndex; index++)
             {
                 var value = await _valueService.Get(index, cancelToken);

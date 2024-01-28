@@ -30,7 +30,7 @@ namespace TaskFib.WebApi.Utilities
         public static IServiceCollection TaskFibAddFibonacciServices(this IServiceCollection services)
         {
             services.AddSingleton<ISequenceValueServiceAsync<BigInteger>, FibonacciServiceAsync>();
-            services.AddSingleton<ISubsequenceServiceAsync<BigInteger>, SubsequenceServiceAsync>();
+            services.AddSingleton<ISubsequenceServiceAsync<BigInteger>, SubsequenceServiceAsync<BigInteger>>();
 
             return services;
         }
