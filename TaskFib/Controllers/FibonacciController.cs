@@ -10,14 +10,16 @@ namespace TaskFib.WebApi.Controllers
     [Route("api/fibonacci")]
     public class FibonacciController : ControllerBase
     {
-        private readonly ILogger<FibonacciController> _logger;
+        #region DI
+
         private readonly ISubsequenceServiceAsync<BigInteger> _subsequenceService;
 
-        public FibonacciController(ILogger<FibonacciController> logger, ISubsequenceServiceAsync<BigInteger> subsequenceService)
+        public FibonacciController(ISubsequenceServiceAsync<BigInteger> subsequenceService)
         {
-            _logger = logger;
             _subsequenceService = subsequenceService;
         }
+
+        #endregion DI
 
         [HttpGet(@"{fromIndex}/{toIndex}")]
         public async Task<IActionResult> Get(
@@ -28,20 +30,16 @@ namespace TaskFib.WebApi.Controllers
         {
             var memLimitBytesNormalized = (memLimitBytes < 0) ? long.MaxValue : memLimitBytes;
 
-            var serviceResult = await _subsequenceService.GetSubsequence(fromIndex, toIndex, timeLimitMs, memLimitBytesNormalized);
+            var serviceResult = await _subsequenceService.GetSubsequence(
+                fromIndex, toIndex,
+                timeLimitMs, memLimitBytesNormalized);
 
-            var count = serviceResult.Count;
-            if (count == 0)
+            if (serviceResult.Count == 0)
             {
                 throw new SingleValueTimeoutException();
             }
-            var expectedCount = toIndex - fromIndex + 1;
 
-            var result = new FibonacciResponseDTO()
-            {
-                Values = serviceResult.Select(value => value.ToString()),
-                IsTimeout = count < expectedCount
-            };
+            var result = serviceResult.ToFibonacciResponseDTO(toIndex - fromIndex + 1);
 
             return new JsonResult(result);
         }
