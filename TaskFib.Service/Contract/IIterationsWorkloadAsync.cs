@@ -2,6 +2,6 @@
 {
     public interface IIterationsWorkloadAsync
     {
-        Task RunWorkload(CancellationToken ct);
+        Task RunWorkload(CancellationToken ct = default);
     }
 }

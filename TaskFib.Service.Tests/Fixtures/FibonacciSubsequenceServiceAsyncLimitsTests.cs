@@ -23,7 +23,7 @@ namespace TaskFib.Service.Tests.Fixtures
         {
             public int DelayMs { get; set; } = delayMs;
 
-            public async Task RunWorkload(CancellationToken ct)
+            public async Task RunWorkload(CancellationToken ct = default)
             {
                 try
                 {

@@ -7,7 +7,7 @@ namespace TaskFib.Service
     {
         private readonly IIterationsWorkloadAsync _iterationsWorkload = iterationsWorkload;
 
-        public async Task<BigInteger> Get(int index, CancellationToken ct)
+        public async Task<BigInteger> Get(int index, CancellationToken ct = default)
         {
             if (index < 0)
             {

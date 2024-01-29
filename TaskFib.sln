@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskFib.WebApi", "TaskFib\T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskFib.Service", "TaskFib.Service\TaskFib.Service.csproj", "{04A670FA-ECA5-4789-B02B-F5DFE2748F3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFib.Service.Tests", "TaskFib.Service.Tests\TaskFib.Service.Tests.csproj", "{20CC7934-A7C0-4DF0-96A3-9F68AFD475A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskFib.Service.Tests", "TaskFib.Service.Tests\TaskFib.Service.Tests.csproj", "{20CC7934-A7C0-4DF0-96A3-9F68AFD475A2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{04A670FA-ECA5-4789-B02B-F5DFE2748F3E} = {04A670FA-ECA5-4789-B02B-F5DFE2748F3E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFib.WebApi.Tests", "TaskFib.WebApi.Tests\TaskFib.WebApi.Tests.csproj", "{2E58FB52-7875-4C30-9435-E7F902EC9DB5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E44003E9-66FF-4FD0-9382-D95574C44506} = {E44003E9-66FF-4FD0-9382-D95574C44506}
 	EndProjectSection
 EndProject
 Global
@@ -30,6 +35,10 @@ Global
 		{20CC7934-A7C0-4DF0-96A3-9F68AFD475A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20CC7934-A7C0-4DF0-96A3-9F68AFD475A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20CC7934-A7C0-4DF0-96A3-9F68AFD475A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E58FB52-7875-4C30-9435-E7F902EC9DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E58FB52-7875-4C30-9435-E7F902EC9DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E58FB52-7875-4C30-9435-E7F902EC9DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E58FB52-7875-4C30-9435-E7F902EC9DB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

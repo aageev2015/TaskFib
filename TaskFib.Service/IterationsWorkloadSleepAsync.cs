@@ -6,7 +6,7 @@ namespace TaskFib.Service
     {
         private int _delay = delay;
 
-        public async Task RunWorkload(CancellationToken ct)
+        public async Task RunWorkload(CancellationToken ct = default)
         {
             try
             {
