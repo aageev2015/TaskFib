@@ -1,6 +1,0 @@
-@TaskFibWebApi_HostAddress = http://localhost:5211
-
-GET {{TaskFibWebApi_HostAddress}}/fibonacci/22/33?timeLimitMs=10000&memLimitBytes=1048576'
-Accept: application/json
-
-###

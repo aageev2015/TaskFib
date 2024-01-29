@@ -1,4 +1,5 @@
 ﻿using TaskFib.Service.Contract;
+using TaskFib.Service.Exceptions;
 
 namespace TaskFib.Service
 {
@@ -9,14 +10,17 @@ namespace TaskFib.Service
 
         public async Task<List<T>> GetSubsequence(int fromIndex, int toIndex, int timeLimitMs, long memLimitBytes)
         {
-            if (fromIndex > toIndex)
+            if (fromIndex < 0 || toIndex < 0 || (fromIndex > toIndex))
             {
-                throw new ArgumentException();
+                throw new SequenceRangeException(fromIndex, toIndex);
             }
-
-            if (fromIndex < 0 || toIndex < 0)
+            if (timeLimitMs <= -1)
             {
-                throw new IndexOutOfRangeException();
+                throw new SequenceLimitValueException(String.Empty, "timeLimitMs");
+            }
+            if (memLimitBytes < -1)
+            {
+                throw new SequenceLimitValueException(String.Empty, "memLimitBytes");
             }
 
             using var cancelSource = new CancellationTokenSource(timeLimitMs);
@@ -30,7 +34,7 @@ namespace TaskFib.Service
                 {
                     break;
                 }
-                if (GC.GetTotalMemory(false) > memLimitBytes)
+                if (GC.GetTotalMemory(false) > memLimitBytes && memLimitBytes != -1)
                 {
                     break;
                 }

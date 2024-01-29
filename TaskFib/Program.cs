@@ -1,3 +1,4 @@
+using TaskFib.WebApi.Middlewares;
 using TaskFib.WebApi.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<TaskFibExceptionHandlerMiddleware>();
 
 app.MapControllers();
 

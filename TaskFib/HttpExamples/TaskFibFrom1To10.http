@@ -1,0 +1,7 @@
+@TaskFibWebApi_HostAddress = https://localhost:7202
+
+GET {{TaskFibWebApi_HostAddress}}/api/fibonacci/1/10?timeLimitMs=10000&memLimitBytes=-1&useCache=false
+Accept: application/json
+
+
+###

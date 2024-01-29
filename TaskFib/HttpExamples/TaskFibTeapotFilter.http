@@ -1,0 +1,7 @@
+@TaskFibWebApi_HostAddress = https://localhost:7202
+
+GET {{TaskFibWebApi_HostAddress}}/api/fibonacci/-2/-2?makecofee
+Accept: application/json
+
+
+###

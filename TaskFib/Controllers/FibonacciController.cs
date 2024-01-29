@@ -3,11 +3,13 @@ using System.Numerics;
 using TaskFib.Service.Contract;
 using TaskFib.WebApi.DTO;
 using TaskFib.WebApi.Exceptions;
+using TaskFib.WebApi.Filters;
 using TaskFib.WebApi.Utilities;
 
 namespace TaskFib.WebApi.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/fibonacci")]
     public class FibonacciController(
             ISubsequenceServiceAsync<BigInteger> subsequenceService,
@@ -21,21 +23,20 @@ namespace TaskFib.WebApi.Controllers
 
         #endregion DI
 
+        [TeaPotActionFilter]
         [HttpGet(@"{fromIndex}/{toIndex}")]
-        public async Task<IActionResult> Get(
+        public async Task<FibonacciResponseDTO> Get(
             int fromIndex,
             int toIndex,
             [FromQuery] int timeLimitMs = 10000,
             [FromQuery] long memLimitBytes = -1,
             [FromQuery] bool useCache = false)
         {
-            var memLimitBytesNormalized = (memLimitBytes < 0) ? long.MaxValue : memLimitBytes;
-
             var service = useCache ? _subsequenceCachedService : _subsequenceService;
 
             var serviceResult = await service.GetSubsequence(
                 fromIndex, toIndex,
-                timeLimitMs, memLimitBytesNormalized);
+                timeLimitMs, memLimitBytes);
 
             if (serviceResult.Count == 0)
             {
@@ -44,7 +45,7 @@ namespace TaskFib.WebApi.Controllers
 
             var result = serviceResult.ToFibonacciResponseDTO(toIndex - fromIndex + 1);
 
-            return new JsonResult(result);
+            return result;
         }
     }
 }

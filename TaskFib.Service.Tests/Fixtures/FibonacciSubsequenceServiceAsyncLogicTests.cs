@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using System.Numerics;
 using TaskFib.Service.Contract;
+using TaskFib.Service.Exceptions;
 
 namespace TaskFib.Service.Tests.Fixtures
 {
@@ -109,16 +110,24 @@ namespace TaskFib.Service.Tests.Fixtures
         [Test]
         public void When_RangeLessOrEqZero_Then_IndexOutOfRangeException()
         {
-            Assert.CatchAsync<IndexOutOfRangeException>(async () => await _rangeService.GetSubsequence(-1, 0, 2000, long.MaxValue));
-            Assert.CatchAsync<IndexOutOfRangeException>(async () => await _rangeService.GetSubsequence(-5, -4, 2000, long.MaxValue));
+            Assert.CatchAsync<SequenceRangeException>(async () => await _rangeService.GetSubsequence(-1, 0, 2000, long.MaxValue));
+            Assert.CatchAsync<SequenceRangeException>(async () => await _rangeService.GetSubsequence(-5, -4, 2000, long.MaxValue));
         }
 
         [Test]
         public void When_FromGraterTo_Then_ArgumentException()
         {
-            Assert.CatchAsync<ArgumentException>(async () => await _rangeService.GetSubsequence(5, 4, 2000, long.MaxValue));
-            Assert.CatchAsync<ArgumentException>(async () => await _rangeService.GetSubsequence(1, 0, 2000, long.MaxValue));
-            Assert.CatchAsync<ArgumentException>(async () => await _rangeService.GetSubsequence(-4, -5, 2000, long.MaxValue));
+            Assert.CatchAsync<SequenceRangeException>(async () => await _rangeService.GetSubsequence(5, 4, 2000, long.MaxValue));
+            Assert.CatchAsync<SequenceRangeException>(async () => await _rangeService.GetSubsequence(1, 0, 2000, long.MaxValue));
+            Assert.CatchAsync<SequenceRangeException>(async () => await _rangeService.GetSubsequence(-4, -5, 2000, long.MaxValue));
+        }
+
+        [Test]
+        public void When_LimitParametersWrong_Then_ThrowException()
+        {
+            Assert.CatchAsync<SequenceLimitValueException>(async () => await _rangeService.GetSubsequence(0, 1, -1, long.MaxValue));
+            Assert.CatchAsync<SequenceLimitValueException>(async () => await _rangeService.GetSubsequence(0, 1, 2000, -2));
+            Assert.DoesNotThrowAsync(async () => await _rangeService.GetSubsequence(0, 1, 2000, -1));
         }
 
     }
