@@ -61,7 +61,6 @@ namespace TaskFib.WebApi.Tests.Fixtures
             Assert.That(result2, Is.EqualTo((BigInteger)999));
         }
 
-        //[Ignore("Not solved. Implementation try in SequenceValueCachedProxyService_NotWorking")]
         [Test]
         public async Task When_ParrallelGet_Then_OnlyOneSourceGetReceived()
         {
