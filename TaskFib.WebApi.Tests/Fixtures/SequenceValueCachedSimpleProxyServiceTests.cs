@@ -9,12 +9,12 @@ using TaskFib.WebApi.Utilities;
 namespace TaskFib.WebApi.Tests.Fixtures
 {
     [TestFixture]
-    public class SequenceValueCachedProxyServiceTests
+    public class SequenceValueCachedSimpleProxyServiceTests
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private ISequenceValueServiceAsync<BigInteger> _sourceService;
         private MemoryCache _memoryCache;
-        private SequenceValueCachedProxyService<BigInteger> _testingCachedProxy;
+        private SequenceValueCachedSimpleProxyService<BigInteger> _testingCachedProxy;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
@@ -26,7 +26,7 @@ namespace TaskFib.WebApi.Tests.Fixtures
 
             _memoryCache = new MemoryCache(new MemoryCacheOptions());
 
-            _testingCachedProxy = new SequenceValueCachedProxyService<BigInteger>(
+            _testingCachedProxy = new SequenceValueCachedSimpleProxyService<BigInteger>(
                 _sourceService,
                 _memoryCache,
                 Options.Create(new TaskFibSettings() { SequenceValueCacheExpirationSeconds = 1 })
@@ -61,22 +61,5 @@ namespace TaskFib.WebApi.Tests.Fixtures
             Assert.That(result2, Is.EqualTo((BigInteger)999));
         }
 
-        [Ignore("Not solved. Implementation try in SequenceValueCachedProxyService_NotWorking")]
-        [Test]
-        public async Task When_ParrallelGet_Then_OnlyOneSourceGetReceived()
-        {
-            var results = new BigInteger[10];
-
-            Parallel.For(0, 10, async (int i) =>
-            {
-                results[i] = await _testingCachedProxy.Get(5);
-            });
-
-            await _sourceService.Received(1).Get(5, Arg.Any<CancellationToken>());
-
-            Assert.That(results, Is.EquivalentTo(
-                Enumerable.Repeat((BigInteger)999, 10).ToArray()
-            ));
-        }
     }
 }

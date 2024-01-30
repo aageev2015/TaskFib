@@ -5,7 +5,7 @@ using TaskFib.WebApi.Utilities;
 
 namespace TaskFib.WebApi.Cache
 {
-    public class SequenceValueCachedProxyService<T>(
+    public class SequenceValueCachedSimpleProxyService<T>(
             ISequenceValueServiceAsync<T> sourceService,
             [FromKeyedServices(ServiceKeys.ValuesCache)] IMemoryCache memoryCache,
             IOptions<TaskFibSettings> settings

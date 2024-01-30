@@ -5,7 +5,7 @@ using TaskFib.WebApi.Utilities;
 
 namespace TaskFib.WebApi.Cache
 {
-    public class SequenceValueCachedProxyService_NotWorking<T>(
+    public class SequenceValueCachedComplexProxyService<T>(
             ISequenceValueServiceAsync<T> sourceService,
             [FromKeyedServices(ServiceKeys.ValuesCache)] IMemoryCache memoryCache,
             IOptions<TaskFibSettings> settings
@@ -66,23 +66,6 @@ namespace TaskFib.WebApi.Cache
                     }
                 }
             }
-        }
-
-        public Task<T> Get1(int index, CancellationToken ct = default)
-        {
-            var task = _memoryCache.Get<Task<T>>(index);
-            if (task != null)
-            {
-                return task;
-            }
-
-#pragma warning disable CS8603 // Possible null reference return.
-            return _memoryCache.GetOrCreate(index, cacheEntry =>
-                    {
-                        cacheEntry.SlidingExpiration = TimeSpan.FromSeconds(_expirationSeconds);
-                        return _wrappedService.Get(index, ct);
-                    });
-#pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

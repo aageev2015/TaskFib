@@ -40,7 +40,7 @@ namespace TaskFib.WebApi.Utilities
             services.AddSingleton<ISubsequenceServiceAsync<BigInteger>, SubsequenceServiceAsync<BigInteger>>();
 
             services.AddKeyedSingleton<IMemoryCache, MemoryCache>(ServiceKeys.ValuesCache);
-            services.AddKeyedSingleton<ISequenceValueServiceAsync<BigInteger>, SequenceValueCachedProxyService<BigInteger>>(ServiceKeys.ValuesCache);
+            services.AddKeyedSingleton<ISequenceValueServiceAsync<BigInteger>, SequenceValueCachedComplexProxyService<BigInteger>>(ServiceKeys.ValuesCache);
             services.AddKeyedSingleton<ISubsequenceServiceAsync<BigInteger>, SubsequenceCachedService<BigInteger>>(ServiceKeys.ValuesCache);
 
             return services;
