@@ -46,6 +46,10 @@ namespace TaskFib.WebApi.Cache
                 }
                 else
                 {
+                    if (cacheItem.Value.HasValue)
+                    {
+                        return cacheItem.Value.Value;
+                    }
                     while (true)
                     {
                         await Task.Delay(20).ConfigureAwait(false);
