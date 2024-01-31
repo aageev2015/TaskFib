@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "d1029a50-7d1a-486d-bcd3-237927dab771",
+		"name": "TaskFib",
+		"description": "TaskFib tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32687254"
+	},
+	"item": [
+		{
+			"name": "Cached1-10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7202/api/fibonacci/1/10?timeLimitMs=10000&memLimitBytes=-1&useCache=true",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7202",
+					"path": [
+						"api",
+						"fibonacci",
+						"1",
+						"10"
+					],
+					"query": [
+						{
+							"key": "timeLimitMs",
+							"value": "10000"
+						},
+						{
+							"key": "memLimitBytes",
+							"value": "-1"
+						},
+						{
+							"key": "useCache",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cached1000-1015",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7202/api/fibonacci/100/200?timeLimitMs=10000&memLimitBytes=-1&useCache=true",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7202",
+					"path": [
+						"api",
+						"fibonacci",
+						"100",
+						"200"
+					],
+					"query": [
+						{
+							"key": "timeLimitMs",
+							"value": "10000"
+						},
+						{
+							"key": "memLimitBytes",
+							"value": "-1"
+						},
+						{
+							"key": "useCache",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
